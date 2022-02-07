@@ -5,6 +5,11 @@ This is an IONIC 3 project created with IONIC CLI
 
 An android app is available to download in Google Play
 
+## Demo 
+
+Please look here for demo videos and further instructions
+
+
 To develop your own features, please fork this repository. 
 
 ## Prerequesites 
