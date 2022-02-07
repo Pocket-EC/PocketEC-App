@@ -1,0 +1,60 @@
+.ios, .md {
+	page-home {
+		.fab[mini] {
+			margin: 8px;
+			width: 40px;
+			height: 40px;
+			line-height: 40px;
+			font-size: 11px;
+			color:primary;
+		}
+		.spinner{
+			text-align: center;
+		}
+
+		.header{
+		 	font-size:16px;
+		 	text-align:center;
+		 	font-weight:normal;
+		 	font-color:#000000
+
+		 }
+		.item-header{
+			background-color: #DFDFDF !important;
+		}
+		.linkStyle {
+			text-color:#13AFAF;
+			font-size:12px;
+			text-align:left;
+		}
+		.lightText {
+			text-color : light; //#9C9494;
+			font-size: 12px;
+		}
+		.whiteText {
+			text-color : #ffffff;
+			font-size: 13px;
+		}
+		.methodText {
+	    font-size: 11px;
+	    padding-top: 0px;
+	    padding-bottom: 0px;
+	  }
+	}
+	ion-slide {
+		background-color: #13AFAF; //primary; //#B1F7F7;
+		padding: 20px;
+		height: 70vh !important;
+		width:90vw !important;
+		border-radius: 5%;
+		border: 2px solid;
+		border-color: light;
+	}
+	ion-slide img {
+		height: 50vh !important;
+		width: auto !important;
+	}
+	ion-row{
+		padding: 0px;
+	}
+}

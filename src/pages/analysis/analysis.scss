@@ -1,0 +1,93 @@
+@import '../../theme/variables.scss';
+
+page-analysis {
+  .fab[mini] {
+    margin: 8px;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+  }
+  .methodText {
+    font-size: 11px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+    // background-color: gainsboro;
+    background-color: white;
+  }
+  .paddingSides {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+  .inp{
+    border: 0px;
+  }
+  .inp:focus{
+    border: 2px;
+    border-color: red;
+    border-style: solid;
+  }
+  .scroll-content {
+      background-color: map-get($colors, light);
+  }
+  .no-padding {
+      padding: 0px !important;
+  }
+  .buttonText {
+  text-color : primary;
+  font-size: 12px;
+  }
+  .buttonText:focus {
+  text-color : primary;
+  font-size: 20px;
+  }
+  .labelText {
+  font-size: 12px;
+  }
+  .centerText{
+    text-align: center;
+  }
+  .hide {
+    display: none;
+  }
+  .lightTextCentered {
+    text-color : #9C9494;
+    text-align: center;
+    font-size: 10px;
+
+  }
+  .whiteText {
+    text-color : #ffffff;
+    font-size: 13px;
+  }
+  .tallFont{
+    font-size: 18px;
+    font-family: 'Times';
+    font-weight: 'bolder';
+
+  }
+  .iconColor{
+    background-color: primary
+  }
+
+  ion-card-header {
+      font-weight: bold;
+  }
+  .grid-container {
+    grid-column-gap: 50px;
+  }
+
+  .paddingForA{
+    padding-left: 5px;
+  }
+  .dateTime{
+    text-color: primary;
+  }
+  .dateTime:focus{
+    outline:solid 10px red;
+     --highlight-background: #e2e2e2;
+  }
+
+
+}

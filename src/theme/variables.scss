@@ -1,0 +1,84 @@
+// Ionic Variables and Theming. For more info, please see:
+// http://ionicframework.com/docs/theming/
+
+// Font path is used to include ionicons,
+// roboto, and noto sans fonts
+$font-path: "../assets/fonts";
+
+
+// The app direction is used to include
+// rtl styles in your app. For more info, please see:
+// http://ionicframework.com/docs/theming/rtl-support/
+$app-direction: ltr;
+
+
+@import "ionic.globals";
+
+
+// Shared Variables
+// --------------------------------------------------
+// To customize the look and feel of this app, you can override
+// the Sass variables found in Ionic's source scss files.
+// To view all the possible Ionic variables, see:
+// http://ionicframework.com/docs/theming/overriding-ionic-variables/
+
+
+//blue tabs and lighter green buttons. secondary 0088cc, primary 33cccc
+
+$colors: (
+  primary:    #13AFAF, //bluegreen
+  secondary:  #646B6D, //grey
+  danger:     #f53d3d,
+  light:      #ffffff,
+  dark:       #222,
+  gainsboro:  #DCDCDC
+);
+
+//top toolbar
+$toolbar-md-background:  color($colors, secondary);
+
+
+//bottom tabs
+$tabs-md-background:  color($colors, secondary);
+$tabs-md-tab-color-active: color($colors, light);
+$tabs-md-tab-color: color($colors, light);
+$tabs-md-tab-text-color: color($colors, light);
+
+
+//List background
+$list-md-background-color: color($colors,light);
+$list-md-text-color: color($colors,dark);
+@import "ionic.theme.default";
+
+
+//card properties used in chart
+$card-ios-box-shadow-color:            rgba(0, 0, 0, 0) !default;
+$card-ios-box-shadow:                  0 0px 0px $card-ios-box-shadow-color !default;
+$card-ios-border-radius:               2px !default;
+
+$card-md-box-shadow:	0 0px 0px 0 rgba(0, 0, 0, 0),
+ 0 0px 0px -0px rgba(0, 0, 0, 0), 0 0px 0px 0 rgba(0, 0, 0, 0);
+
+
+//grid properties
+$grid-columns:               12 !default;
+
+$grid-padding-width:         2px !default;
+
+$grid-padding-widths: (
+  xs: $grid-padding-width,
+  sm: $grid-padding-width,
+  md: $grid-padding-width,
+  lg: $grid-padding-width,
+  xl: $grid-padding-width
+) !default;
+
+
+@import "ionic.ionicons";
+
+
+// Fonts
+// --------------------------------------------------
+
+@import "roboto";
+@import "noto-sans";

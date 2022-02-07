@@ -1,0 +1,184 @@
+{
+  "responseDelimiter": "\r\n",
+  "test": {
+    "Tx": "3",
+    "TxAsString": true,
+    "RxAsString": true,
+    "RxLength": "3",
+    "Process": "string"
+  },
+  "readData": {
+    "Tx": "3",
+    "TxAsString": true,
+    "RxAsString": false,
+    "RxLength": "3",
+    "Process": "voyager"
+  },
+  "readTemperature":{
+    "Tx": "2",
+    "TxAsString": true,
+    "RxAsString": false,
+    "RxLength": "3",
+    "Process": "voyager"
+  },
+  "setConfigMode":{
+    "Tx": "0",
+    "TxAsString": true,
+    "RxAsString": false,
+    "Rx": "Send Three Bytes",
+    "RxLength": "18",
+    "Process": "voyager"
+  },
+  "setRegisters":{
+    "Tx": null,
+    "TxAsString": false,
+    "RxAsString": false,
+    "Rx": "TIACN OK\r\nREFCN OK\r\nMODECN OK",
+    "RxLength": "31",
+    "Process": "voyager"
+  },
+  "REFCN":[
+    {"description":"20%",
+      "SETTING": [
+        {"description":"0.6V 20%","command":"157"},
+        {"description":"0.55V 20%","command":"156"},
+        {"description":"0.5V 20%","command":"155"},
+        {"description":"0.45V 20%","command":"154"},
+        {"description":"0.4V 20%","command":"153"},
+        {"description":"0.35V 20%","command":"152"},
+        {"description":"0.3V 20%","command":"151"},
+        {"description":"0.25V 20%","command":"150"},
+        {"description":"0.2V 20%","command":"149"},
+        {"description":"0.15V 20%","command":"148"},
+        {"description":"0.1V 20%","command":"147"},
+        {"description":"0.05V 20%","command":"146"},
+        {"description":"0.025V 20%","command":"145"},
+        {"description":"0V 20%","command":"144"},
+        {"description":"-0V 20%","command":"128"},
+        {"description":"-0.025V 20%","command":"129"},
+        {"description":"-0.05V 20%","command":"130"},
+        {"description":"-0.1V 20%","command":"131"},
+        {"description":"-0.15V 20%","command":"132"},
+        {"description":"-0.2V 20%","command":"133"},
+        {"description":"-0.25V 20%","command":"134"},
+        {"description":"-0.3V 20%","command":"135"},
+        {"description":"-0.35V 20%","command":"136"},
+        {"description":"-0.4V 20%","command":"137"},
+        {"description":"-0.45V 20%","command":"138"},
+        {"description":"-0.5V 20%","command":"139"},
+        {"description":"-0.55V 20%","command":"140"},
+        {"description":"-0.6V 20%","command":"141"}
+      ]
+    },
+    {"description":"50%",
+      "SETTING": [
+        {"description":"0.6V 50%","command":"189"},
+        {"description":"0.55V 50%","command":"188"},
+        {"description":"0.5V 50%","command":"187"},
+        {"description":"0.45V 50%","command":"186"},
+        {"description":"0.4V 50%","command":"185"},
+        {"description":"0.35V 50%","command":"184"},
+        {"description":"0.3V 50%","command":"183"},
+        {"description":"0.25V 50%","command":"182"},
+        {"description":"0.2V 50%","command":"181"},
+        {"description":"0.15V 50%","command":"180"},
+        {"description":"0.1V 50%","command":"179"},
+        {"description":"0.05V 50%","command":"178"},
+        {"description":"0.025V 50%","command":"177"},
+        {"description":"0V 50%","command":"176"},
+        {"description":"-0V 50%","command":"160"},
+        {"description":"-0.025V 50%","command":"161"},
+        {"description":"-0.05V 50%","command":"162"},
+        {"description":"-0.1V 50%","command":"163"},
+        {"description":"-0.15V 50%","command":"164"},
+        {"description":"-0.2V 50%","command":"165"},
+        {"description":"-0.25V 50%","command":"166"},
+        {"description":"-0.3V 50%","command":"167"},
+        {"description":"-0.35V 50%","command":"168"},
+        {"description":"-0.4V 50%","command":"169"},
+        {"description":"-0.45V 50%","command":"170"},
+        {"description":"-0.5V 50%","command":"171"},
+        {"description":"-0.55V 50%","command":"172"},
+        {"description":"-0.6V 50%","command":"173"}
+      ]
+    },
+    {"description":"67%",
+      "SETTING": [
+        {"description":"0.6V 67%","command":"221"},
+        {"description":"0.55V 67%","command":"220"},
+        {"description":"0.5V 67%","command":"219"},
+        {"description":"0.45V 67%","command":"218"},
+        {"description":"0.4V 67%","command":"217"},
+        {"description":"0.35V 67%","command":"216"},
+        {"description":"0.3V 67%","command":"215"},
+        {"description":"0.25V 67%","command":"214"},
+        {"description":"0.2V 67%","command":"213"},
+        {"description":"0.15V 67%","command":"212"},
+        {"description":"0.1V 67%","command":"211"},
+        {"description":"0.05V 67%","command":"210"},
+        {"description":"0.025V 67%","command":"209"},
+        {"description":"0V 67%","command":"208"},
+        {"description":"-0V 67%","command":"192"},
+        {"description":"-0.025V 67%","command":"193"},
+        {"description":"-0.05V 67%","command":"194"},
+        {"description":"-0.1V 67%","command":"195"},
+        {"description":"-0.15V 67%","command":"196"},
+        {"description":"-0.2V 67%","command":"197"},
+        {"description":"-0.25V 67%","command":"198"},
+        {"description":"-0.3V 67%","command":"199"},
+        {"description":"-0.35V 67%","command":"200"},
+        {"description":"-0.4V 67%","command":"201"},
+        {"description":"-0.45V 67%","command":"202"},
+        {"description":"-0.5V 67%","command":"203"},
+        {"description":"-0.55V 67%","command":"204"},
+        {"description":"-0.6V 67%","command":"205"}
+      ]
+    }
+  ],
+  "TIACN":[
+      {"description":"10Ω",
+        "SETTING":[
+          {"description":"2.75K 10Ω","command": "4"},
+          {"description":"3.5K 10Ω","command":"8"},
+          {"description":"7K 10Ω","command":"12"},
+          {"description":"15K 10Ω","command":"16"},
+          {"description":"35K 10Ω","command":"20"},
+          {"description":"120K 10Ω","command":"24"},
+          {"description":"350K 10Ω","command":"28"}
+        ]
+      },
+      {"description":"33Ω",
+        "SETTING":[
+          {"description":"2.75K 33Ω","command": "5"},
+          {"description":"3.5K 33Ω","command":"9"},
+          {"description":"7K 33Ω","command":"13"},
+          {"description":"15K 33Ω","command":"17"},
+          {"description":"35K 33Ω","command":"21"},
+          {"description":"120K 33Ω","command":"25"},
+          {"description":"350K 33Ω","command":"29"}
+        ]
+      },
+      {"description":"50Ω",
+        "SETTING":[
+          {"description":"2.75K 50Ω","command": "6"},
+          {"description":"3.5K 50Ω","command":"10"},
+          {"description":"7K 50Ω","command":"14"},
+          {"description":"15K 50Ω","command":"18"},
+          {"description":"35K 50Ω","command":"22"},
+          {"description":"120K 50Ω","command":"26"},
+          {"description":"350K 50Ω","command":"30"}
+        ]
+      },
+      {"description":"100Ω",
+        "SETTING":[
+          {"description":"2.75K 100Ω","command": "7"},
+          {"description":"3.5K 100Ω","command":"11"},
+          {"description":"7K 100Ω","command":"15"},
+          {"description":"15K 100Ω","command":"19"},
+          {"description":"35K 100Ω","command":"23"},
+          {"description":"120K 100Ω","command":"27"},
+          {"description":"350K 100Ω","command":"31"}
+        ]
+      }
+    ]
+}

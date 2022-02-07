@@ -1,0 +1,80 @@
+<ion-header>
+	<ion-navbar>
+		<ion-title>Device</ion-title>
+	</ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+	<div class="spacer" style="width:300px;height:39px;" id="device-spacer6"></div>
+
+	<ion-item no-lines *ngIf="device" class="title">
+		{{device.name}}
+	</ion-item>
+	<!-- start Connection and setup view template -->
+	<ion-item no-lines class="centerText">
+	 	<div *ngIf="connectingToDevice" class="centerText">
+		 	<p class="lightText">Connecting to...</p>
+	 		<ion-spinner name="crescent" ></ion-spinner>
+	 	</div>
+
+	 	<div *ngIf="!deviceConnected && !connectingToDevice">
+	 		<p class="lightText">Could not connect at this time</p><br>
+	 		<button ion-button (click) = "connectToDevice(device.address)">Try again</button>
+	 	</div>
+
+	 	<div *ngIf="deviceConnected && !connectingToDevice">
+			<p class="lightText">Connected!</p>
+			<br>
+			<p style='color:red;'>Great!
+				<br>Press the back arrow to go back to Settings to set up an experiment!
+			  <br>Click on configure App to set device specific properties in the app!
+			</p>
+		</div>
+		<p>
+			<button ion-button [disabled]="!deviceConnected || connectingToDevice" (click)="disconnect()" clear>Disconnect</button>
+					<button ion-button [disabled]="!deviceConnected || connectingToDevice" (click)="goToUpload();" clear >Configure App</button>
+		</p>
+	</ion-item>
+
+	<!-- end connection and setup view template -->
+
+  <!-- Start setup template -->
+
+	<div *ngIf='displayDeviceConfig && deviceConnected' padding>
+
+		<ion-item no-lines class="title">
+			Check device communication
+		</ion-item>
+
+		<span style='color:red;overflow-wrap: break-word;'>Ex. commands: 0, 4 157 3,4 157 7,3,2 etc. </span>
+		<div *ngIf="writingFlag" class="centerText">
+			<p class="lightText">Sending command...</p>
+			<ion-spinner name="crescent" ></ion-spinner>
+		</div>
+		<ion-item class='methodText'>
+			<ion-label class='methodText' color='primary'>Command </ion-label>
+			<ion-input #cmdInput [(ngModel)]="write" placeholder="Enter command here" item-end></ion-input>
+		</ion-item>
+		<ion-item class='methodText'>
+			<ion-label class='methodText' color='primary'>Expected Response Length </ion-label>
+			<ion-input [(ngModel)]="expectedReplyLength" placeholder="3" type='number' item-end></ion-input>
+		</ion-item>
+		<span class='methodText' color='red'>*Required if response read as bytes</span>
+		<ion-item no-lines>
+			<button ion-button item-right (click)="sendToDevice(write)" item-end>Send To Device</button>
+		</ion-item>
+
+
+		<ion-item *ngFor="let command of commands" text-wrap>
+			<span class='verticalAlign'>Sent: {{command.cmd}}  ...<span class='darkBG'>Recd: {{command.reply}}</span></span>
+			<button class='icon' ion-button clear (click)='deleteFromCommands(command)'>
+				<ion-icon class="icon" name="trash"></ion-icon>
+			</button>
+		</ion-item>
+		<ion-item *ngIf="commands.length>0" style="font-size: 11px;" no-lines>
+			<button  ion-button (click)="exportCommandHistory()">Export</button>
+		</ion-item>
+
+	</div>
+</ion-content>

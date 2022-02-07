@@ -1,0 +1,193 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Home</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <div *ngIf='isAuthenticated'>
+    <ion-item no-lines no-padding  *ngIf='user!=undefined'>
+      <ion-label color='primary'><b>User</b></ion-label>
+      <ion-label  text-end >{{this.user.name}}</ion-label>
+    </ion-item>
+    <ion-item no-lines no-padding  *ngIf='device != undefined'>
+      <ion-label color='primary'><b>Device</b></ion-label>
+      <ion-label  text-end >{{this.device.name}}</ion-label>
+    </ion-item>
+
+
+    <div *ngIf='device != undefined || isAuthenticated == null || isAuthenticated == false'>
+      <ion-item no-lines no-padding>
+        <ion-label color='primary'><b>Experiment Name</b></ion-label>
+        <ion-input  text-end color='primary' [(ngModel)]="experimentName" placement='Experiment 1'> </ion-input>
+      </ion-item>
+      <ion-item no-lines no-padding>
+        <ion-label color='primary'><b>Choose a Method</b></ion-label>
+        <ion-select text-end placeholder="Select One"
+             interface='action-sheet'
+            required (ionChange)="getChosenMethod($event)"
+            [(ngModel)]="chosenMethodIndex" #chooseAMethod  multiple='false'>
+          <ion-option  *ngFor="let method of methodNamesArray; let i=index" value={{i}}>
+            {{method.description}}
+          </ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item  no-lines no-padding>
+        <ion-label color='primary'><b>Show real time conc.</b></ion-label>
+        <ion-toggle (ionChange)="setDisplayLiveConcUpdate($event)" [(ngModel)]="displayLiveConcUpdate" name='displayUpdate'></ion-toggle>
+      </ion-item>
+
+      <!-- Start Calibration listing -->
+      <ion-item no-lines  *ngIf="!showPostProcessing">
+        <button ion-button full clear
+          (click)="managePostProcessingView()" align="left"> Post Processing &nbsp;&nbsp; >
+        </button>
+      </ion-item>
+      <ion-item no-lines  *ngIf="showPostProcessing">
+        <button ion-button full clear
+          (click)="managePostProcessingView()" align="left"> Post Processing &nbsp; &#8964;
+        </button>
+      </ion-item>
+      <div *ngIf="showPostProcessing">
+        <div style='background-color: gainsboro'>
+          <ion-item no-padding no-lines >
+            <ion-label color='primary' class="methodText">Include first data point of step</ion-label>
+            <ion-toggle [(ngModel)]="postProcessingParamObj.includeFirstMeasure" name='inclFirst'></ion-toggle>
+          </ion-item>
+          <ion-item class='methodText' no-lines no-padding>
+            <ion-label color='primary' class="methodText">Unit of Charge</ion-label>
+            <ion-input class='methodText' text-end required
+            type='text' [(ngModel)]='postProcessingParamObj.unitOfCharge' #unitOfCharge
+            placeholder='mM' class='inp'></ion-input>
+          </ion-item>
+
+          <ion-item text-end class='methodText' no-lines no-padding>
+            <ion-label color='primary' class="methodText">Offset *</ion-label>
+            <ion-input text-end required type='number' #offset
+            [(ngModel)]='postProcessingParamObj.offset' name='offset' placeholder='0'></ion-input>
+
+          </ion-item>
+          <ion-item text-end class='methodText' no-lines no-padding>
+            <ion-label color='primary' class="methodText">Sensitivity *</ion-label>
+            <ion-input text-end required type='number' #sensitivity
+            [(ngModel)]='postProcessingParamObj.sensitivity' name='sensitivity' placeholder='0' class='inp'></ion-input>
+          </ion-item>
+
+          <ion-item class='methodText' no-lines no-padding>
+            <ion-label color='primary' class="methodText">Calculate Final Charge</ion-label>
+            <ion-select text-end placeholder="Select One" #algorithmView
+                 interface='action-sheet'
+                 (ionChange)='setAlgorithm($event);'
+                 multiple='false'
+                 name='calculateCharge'>
+              <ion-option  *ngFor="let algorithm of algorithmArray; let i=index" value={{i}}>
+                {{algorithm.description}}
+              </ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item class='methodText' no-padding no-lines >
+            <ion-label color='primary' class="methodText">Unit of Result</ion-label>
+            <ion-input class='methodText' text-end required #unitDependentOnSensitivity
+            type='text' [(ngModel)]='postProcessingParamObj.unitDependentOnSensitivity'
+            name='unitDependentOnSensitivity' placeholder='mM' class='inp'></ion-input>
+          </ion-item>
+          <ion-item text-end class='methodText' no-lines no-padding>
+            <ion-label color='primary' class="methodText"><a (click)='goToCalibrate()' text-end>Calibrate</a></ion-label>
+          </ion-item>
+        </div>
+      </div>
+      <!-- End Calibration -->
+
+      <ion-row>
+        <ion-col *ngIf='!experimentRunning'>
+            <button ion-button (click)="startExperiment();" color='danger' [disabled]="disableButton">Start Experiment</button>
+          </ion-col>
+        <ion-col *ngIf='experimentRunning'>
+            <button ion-button (click)="stopExperiment();" color='danger' [disabled]="disableButton">Stop Experiment</button>
+        </ion-col>
+      </ion-row>
+    </div>
+
+
+    <div  style='background-color: gainsboro' no-lines>
+      <ion-row *ngIf="lastMeasuredConcentration">
+        <ion-col><ion-label color='danger'><b>Concentration</b></ion-label>
+        </ion-col>
+        <ion-col><ion-label color='danger'><b>{{lastMeasuredConcentration}}</b></ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="showLoadingSpinner"  align='center'>
+        <ion-col  *ngIf='device != undefined || isAuthenticated == null || isAuthenticated == false'>
+          <ion-spinner name="crescent" ></ion-spinner>
+          <p><span class="lightText">{{spinnerText}}</span></p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col *ngIf='device == undefined'>
+        <p class='whiteText'> No device is associated with your account! </p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col *ngIf='exptStartTime != undefined'>
+          <p class='whiteText'> <b>Experiment Started:</b> {{exptStartTime}} </p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col *ngIf='lastSampledTime!= undefined'>
+          <p class='whiteText'> Last sampling Time: {{lastSampledTime}} </p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col *ngIf='statusUpdateForUser != undefined && statusUpdateForUser != null'  align='center'>
+          <ion-icon name="alarm" style='color:red;'></ion-icon>
+          <p  class='whiteText'> {{statusUpdateForUser}} </p>
+        </ion-col>
+      </ion-row>
+    </div>
+  </div><!-- Closing isAuthenticated div  -->
+
+<!-- Start login/signup view -->
+  <div *ngIf='!isAuthenticated' >
+    <div class="spacer" style="width:300px;height:50px;" id="home-spacer1"></div>
+
+    <form id="home-form1" method="post" name="signinForm">
+      <ion-item id="home-input1">
+        <ion-label floating color="primary">Email</ion-label>
+        <ion-input type="email" color="primary" name="email" required autofocus [(ngModel)]="loginUser.email" value=''></ion-input>
+        <span style="color:red" class="field_note" ng-show="signinForm.email.$error.email">The value entered is not a valid email format!</span>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" floating>Password</ion-label>
+        <ion-input type="password" color="primary" name="password" required [(ngModel)]="loginUser.password"></ion-input>
+      </ion-item>
+    </form>
+      <ion-item text-wrap>
+        <ion-label><a (click)='help()'>Agree to Terms and Conditions</a></ion-label>
+          <ion-checkbox color="dark" checked="false" [(ngModel)]="readLicense"></ion-checkbox>
+      </ion-item>
+      <ion-item no-lines>
+        <button ion-button color="primary" block (click) = "login(loginUser)">
+          Sign in
+        </button>
+      </ion-item>
+
+    <div class="spacer" style="width:300px;height:50px;"></div>
+    <ion-item no-lines>
+      <span color='primary'> No account yet?</span>
+      <button ion-button class="linkStyle" item-end  clear (click) = "signup()">
+        Sign up now
+      </button>
+    </ion-item>
+    <ion-item no-lines text-center>
+      <a color='primary'  (click) = "guest()"> Use as guest</a>
+    </ion-item>
+    <ion-item no-lines text-center class='methodText'>
+      <a (click)='help()'>Terms and Conditions</a>
+    </ion-item>
+
+  </div>
+<!-- End login/signup view -->
+
+</ion-content>

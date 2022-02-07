@@ -1,0 +1,59 @@
+page-methods {
+  .methodText {
+    font-size: 11px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+
+  // .item .item-content {
+  //   background-color: transparent !important;
+  //
+  // }
+  //
+  // .icon {
+  //   color: primary !important;
+  //   background-color: transparent;
+  //   display: inline-block;
+ 	// 	vertical-align: middle;
+  // }
+
+  .item-no-padding{
+    padding-left: 0px;
+    color : map-get($colors, primary);
+    font-size: 12px;
+
+  }
+//is not working.
+  .item  .item-divider {
+    border-color: map-get($colors,primary);
+  }
+
+  .prompt_alert .alert-message{
+  	text-align: right;
+  }
+  .prompt_alert .alert-input{
+  	border-bottom: none!important;
+      caret-color: #F58282;
+  }
+  .prompt_alert .alert-input-group:before {
+      content: '#';
+      display: inline-block;
+      float: right;
+      line-height: 3.5;
+      color: black;
+  }
+  .prompt_alert .alert-input-wrapper {
+      display: flex;
+      padding-right: 3px;
+  }
+  .basicActionSheet {
+    --backdrop-opacity: 0.6;
+    --background: map-get($colors,primary);
+    .action-sheet-title.sc-ion-action-sheet-md, .action-sheet-title.sc-ion-action-sheet-ios {
+        font-size: 16;
+        color: var(--ion-color-light);
+    }
+  }
+
+
+}

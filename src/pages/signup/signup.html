@@ -1,0 +1,93 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Create account</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <form class="form" [formGroup]="registerForm"  (ngSubmit)="register(registerForm.value)">
+
+    <ion-item>
+      <ion-label floating color="primary">Name</ion-label>
+      <ion-input  type="text" formControlName="name"></ion-input>
+    </ion-item>
+    <div class="validation-errors">
+      <ng-container *ngFor="let validation of validation_messages.name">
+        <div class="error-message" *ngIf="registerForm.get('name').hasError(validation.type) && (registerForm.get('name').dirty || registerForm.get('name').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+
+    <ion-item>
+      <ion-label floating color="primary">Email</ion-label>
+      <!-- <ion-input [textMask]="emailMask" type="email" formControlName="email"></ion-input> -->
+      <ion-input type="email" formControlName="email"></ion-input> <!--no validation happening at them moment. textMask does not compile -->
+    </ion-item>
+    <div class="validation-errors">
+      <ng-container *ngFor="let validation of validation_messages.email">
+        <div class="error-message" *ngIf="registerForm.get('email').hasError(validation.type) && (registerForm.get('email').dirty || registerForm.get('email').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+
+
+    <div formGroupName="matchingPasswords">
+      <ion-item>
+        <ion-label floating color="primary">Password</ion-label>
+        <ion-input type="password" formControlName="password"></ion-input>
+      </ion-item>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.password">
+          <div class="error-message" *ngIf="registerForm.get('matchingPasswords').get('password').hasError(validation.type) && (registerForm.get('matchingPasswords').get('password').dirty || registerForm.get('matchingPasswords').get('password').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+
+      <ion-item>
+        <ion-label floating color="primary">Confirm Password</ion-label>
+        <ion-input type="password" formControlName="confirmPassword"></ion-input>
+      </ion-item>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.confirmPassword">
+          <div class="error-message" *ngIf="registerForm.get('matchingPasswords').get('confirmPassword').hasError(validation.type) && (registerForm.get('matchingPasswords').get('confirmPassword').dirty || registerForm.get('matchingPasswords').get('confirmPassword').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <!-- These validations are for the form group -->
+    <div class="validation-errors">
+      <ng-container *ngFor="let validation of validation_messages.matchingPasswords">
+        <div class="error-message" *ngIf="registerForm.get('matchingPasswords').hasError(validation.type) && (registerForm.get('matchingPasswords').get('confirmPassword').dirty || registerForm.get('matchingPasswords').get('confirmPassword').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+
+    <ion-item class="terms-item">
+      <ion-label color="primary">I accept terms and conditions</ion-label>
+      <ion-checkbox formControlName="terms"></ion-checkbox>
+    </ion-item>
+    <div class="validation-errors">
+      <ng-container *ngFor="let validation of validation_messages.terms">
+        <div class="error-message" *ngIf="registerForm.get('terms').hasError(validation.type) && (registerForm.get('terms').dirty || registerForm.get('terms').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+
+    <button ion-button full type="submit" [disabled]="!registerForm.valid">Submit</button>
+
+  </form>
+  <ion-item no-lines text-center class='methodText'>
+    <a (click)='help()'>Terms and Conditions</a>
+  </ion-item>
+
+</ion-content>

@@ -1,0 +1,44 @@
+@import '../theme/variables.scss';
+.toolbar-title{
+ 	text-align: center;
+ }
+.title.title-md {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    height: 100%;
+    width: 70%;
+    text-align: center;
+}
+//added this for gestures swipe
+.main-content {
+  height: 100%;
+}
+.centerText {
+	text-align: center;
+}
+
+.buttonText {
+  color : map-get($colors, primary);
+  font-size: 12px;
+}
+
+.methodsIcon{
+  // background: map-get($colors,gainsboro);
+  // color: map-get($colors, primary);
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+.no-padding {
+    padding: 0px !important;
+}
+
+.basicActionSheet {
+  --backdrop-opacity: 0.6;
+  --background: linear-gradient(90deg, rgb(167, 26, 136) 1%, rgb(248, 255, 248) 100%);
+  .action-sheet-title.sc-ion-action-sheet-md, .action-sheet-title.sc-ion-action-sheet-ios {
+      font-size: 16;
+      color: var(--ion-color-light);
+  }
+}

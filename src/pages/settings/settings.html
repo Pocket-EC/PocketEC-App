@@ -1,0 +1,112 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Settings
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+
+    <ion-item  no-lines *ngIf="gettingDevices" class="center">
+        <ion-spinner name="crescent"></ion-spinner>
+    </ion-item>
+    <ion-item no-lines >
+      <button ion-button full (click)="startScanning()">scan for a new device</button>
+    </ion-item>
+
+    <div *ngIf='showWhenScanning'>
+
+      <ion-list-header *ngIf="paired" class="item-header">
+           Paired Devices
+      </ion-list-header>
+      <ion-item *ngFor="let device of pairedDevices">
+          {{device.name}}
+          <button ion-button item-end (click)="goToDevicePage(device,0)">Connect</button>
+      </ion-item>
+
+      <ion-list-header *ngIf="unpaired" class="item-header">
+              Available Devices
+      </ion-list-header>
+      <ion-item *ngFor='let device of unpairedDevices'>
+            {{device.name}}
+          <button ion-button item-end (click)="goToDevicePage(device,0)">Connect</button>
+      </ion-item>
+    </div>
+
+
+    <div *ngIf='showConnectedDevice || storedDeviceName!=undefined'>
+      <ion-list-header *ngIf="showConnectedDevice" class="item-header">
+           Saved Device
+      </ion-list-header>
+      <ion-item style="font-size: 12px;">
+          <ion-label  color="primary" class=''><b>Name: {{storedDevice.name}}</b></ion-label>
+      </ion-item>
+      <ion-item style="font-size: 11px;">
+          <ion-label  color="primary"><b>Methods:</b></ion-label>
+          <button ion-button item-end (click)="goToMethodsPage();">Setup Methods</button>
+      </ion-item>
+      <ion-item style="font-size: 11px;">
+          <ion-label  color="primary"><b>Configuration:</b></ion-label>
+          <button ion-button item-end (click)="goToUpload();">Configure App </button>
+      </ion-item>
+
+    </div>
+
+
+    <div *ngIf='showDeviceSetting'>
+      <!-- Disabled and readonly textarea in an item with a stacked label -->
+      <ion-item>
+        <ion-textarea
+          disabled
+          readonly
+          value={{deviceSettingAsString}} rows='45'>
+        </ion-textarea>
+      </ion-item>
+    </div>
+
+
+    <ion-item class="center" *ngIf="auth">
+      <button class="linkStyle" id="signout" ion-button clear color="primary"  (click) = "signOutNow()">
+        Log out now
+      </button>
+    </ion-item>
+
+  </ion-list>
+
+
+
+  <ion-item text-wrap>
+    <button ion-button block (click)="downloadDebugFile()">Download Debug File</button>
+  </ion-item>
+  <ion-item text-wrap>
+    <button ion-button block (click)="downloadMissingDataHistory()">Download Exp. missing Data</button>
+  </ion-item>
+
+
+  <ion-item no-lines >
+    <button ion-button full
+      (click)="manageExptListView()"> Delete Experiment Data
+    </button>
+  </ion-item>
+
+  <div *ngIf="showExptList">
+    <p>Date & Time | Experiment Name</p>
+    <ion-item  *ngFor="let data of storedDataByExperiments">
+        <p>
+          {{data.dateCreated}} | {{data.name}}
+          <button class='icon' ion-button clear (click)='deleteStoredDataByExptId(data)'>
+            <ion-icon class="icon" name="trash"></ion-icon>
+          </button>
+        </p>
+    </ion-item>
+  </div>
+
+  <ion-item text-wrap>
+    <button ion-button block >Version No: 1.0.0.01</button>
+  </ion-item>
+
+
+
+</ion-content>

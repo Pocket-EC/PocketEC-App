@@ -1,0 +1,44 @@
+page-charts {
+
+  .scroll-content {
+      background-color: map-get($colors, light);
+  }
+  .no-padding {
+      padding: 0px !important;
+  }
+  .buttonText {
+  text-color : primary;
+  font-size: 12px;
+  }
+  .centerText{
+    text-align: center;
+  }
+  .hide {
+    display: none;
+  }
+  .lightTextCentered {
+    text-color : #9C9494;
+    text-align: center;
+    font-size: 10px;
+
+  }
+  .whiteText {
+    text-color : #ffffff;
+    font-size: 13px;
+  }
+  .tallFont{
+    font-size: 18px;
+    font-family: 'Times';
+    font-weight: 'bolder';
+
+  }
+  .iconColor{
+    background-color: primary;
+    color: primary;
+  }
+
+  ion-card-header {
+      font-weight: bold;
+  }
+
+}

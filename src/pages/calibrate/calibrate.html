@@ -1,0 +1,158 @@
+<!--
+  Generated template for the CalibratePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Calibration</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <!-- Define Segment with default selection -->
+  <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]= "type" value="mode">
+    <ion-segment-button value="new">
+      <ion-label>New</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="list">
+      <ion-label>List all</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+<!--  Define switch case for each segment -->
+  <div [ngSwitch]="type" class='methodText'>
+    <ion-list *ngSwitchCase="'new'">
+      <ion-item no-lines class='methodText'>
+        <ion-label class='methodText' text-center><b>Record New Calibration</b></ion-label>
+      </ion-item>
+
+      <ion-item no-lines class='methodText'>
+        <ion-label>
+          Offset/Std 1 Conc.
+        </ion-label>
+        <ion-input text-end required type='number' [(ngModel)]='concentration1' placeholder='Enter'></ion-input>
+      </ion-item>
+      <ion-item no-lines class='methodText'>
+        <ion-label>
+          Offset/Std 1 value.
+        </ion-label>
+        <ion-input type='number' text-end item-middle name='offset' [(ngModel)]='offset' placeholder='Enter/Select'></ion-input>
+      </ion-item>
+
+
+      <ion-item no-lines class='methodText'>
+        <ion-label>
+          Load Offset
+        </ion-label>
+        <ion-select text-end placeholder="Load Offset"
+          interface='action-sheet'
+          (ionChange)='setOffset();'
+          multiple='false' name='selectCalibration' [(ngModel)]="chosenOffset">
+          <ion-option  *ngFor="let item of calibrations; let i=index" [value]=item>
+            Name:{{item.name}} & Offset: {{item.offset}}
+          </ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item class='methodText'>
+            <button ion-button (click)="measureOffset();" color='danger' [disabled]="disableButton" block>Measure Offset</button>
+      </ion-item>
+
+      <ion-item no-lines class='methodText'>
+        <ion-label>
+          Calibrant/Std 2 Conc.
+        </ion-label>
+        <ion-input text-end required type='number' [(ngModel)]='concentration2' placeholder='Enter'></ion-input>
+      </ion-item>
+      <ion-item no-lines class='methodText'>
+        <ion-label>
+          Calibrant/Std 2 value
+        </ion-label>
+        <ion-input type='number' text-end item-middle name='offset' [(ngModel)]='calibrant' placeholder='Enter/Measure'></ion-input>
+      </ion-item>
+
+      <ion-item class='methodText'>
+            <button ion-button (click)="measureCalibrationStandard();" color='danger' [disabled]="disableButton" block>Measure Calibration Standard</button>
+      </ion-item>
+
+
+        <ion-item no-lines class='methodText' color='danger' *ngIf='showMissingCoordinatesError'>
+          <ion-label>
+            Enter a value for either the offset or calibrant value and conc.!
+          </ion-label>
+        </ion-item>
+
+
+      <ion-item no-lines class='methodText'>
+        <ion-label>Unit of Result</ion-label>
+        <ion-input class='methodText' text-end required #unitDependentOnSensitivity
+          type='text' [(ngModel)]='postProcessingParamObj.unitDependentOnSensitivity'
+          name='unitDependentOnSensitivity' placeholder='Enter' class='inp'></ion-input>
+      </ion-item>
+      <ion-item no-lines class='methodText'>
+        <ion-label>
+          Save As
+        </ion-label>
+        <ion-input text-end required type='text' [(ngModel)]='name' placeholder='0'></ion-input>
+      </ion-item>
+
+
+      <ion-item class='methodText'>
+            <button ion-button (click)="calibrate();" color='danger' [disabled]="disableButton" block>Calibrate</button>
+      </ion-item>
+      <!-- <ion-item *ngIf='calibrationRunning'  class='methodText'>
+            <button ion-button (click)="stopCalibration();" color='danger' [disabled]="disableButton" block>Stop Calibration</button>
+      </ion-item> -->
+
+      <ion-fab bottom left mini  *ngIf='calibrationRunning'>
+        <button ion-fab  color='danger' (click)='stopCalibration()' mini>
+          <!-- <ion-icon name="stop" color='white'></ion-icon> -->
+          <img src="assets/imgs/stop.png" />
+        </button>
+      </ion-fab>
+
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'list'">
+      <br>
+      <ion-item *ngFor="let calib of calibrations; let i = index" class='methodText'>
+        <ion-label (click)='chooseCalibration(calib)'  class='methodText'>
+        Name: {{calib.name}}, {{calib.dateCreated}}<br>
+        Sensitivity: {{calib.sensitivity}}, Offset: {{calib.offset}},{{calib.unit}}
+        </ion-label>
+        <img item-end (click)='chooseCalibration(calib)' src="assets/imgs/icons8-pencil-16.png" />
+
+        <img item-end (click)='confirmBeforeDeletion(calib)' src="assets/imgs/icons8-trash-can-16.png" />
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <div  *ngIf="calibrationInProgress" style='background-color: gainsboro' no-lines>
+    <ion-row *ngIf="showLoadingSpinner"  align='center'>
+      <ion-col>
+        <ion-spinner name="crescent" ></ion-spinner>
+        <p><span class="lightText">{{spinnerText}}</span></p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col *ngIf='exptStartTime != undefined'>
+        <p class='whiteText'> <b>Calibration Started:</b> {{exptStartTime}} </p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col *ngIf='lastSampledTime!= undefined'>
+        <p class='whiteText'> Last sampling Time: {{lastSampledTime}} </p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col *ngIf='statusUpdateForUser != undefined && statusUpdateForUser != null'  align='center'>
+        <ion-icon name="alarm" style='color:red;'></ion-icon>
+        <p  class='whiteText'> {{statusUpdateForUser}} </p>
+      </ion-col>
+    </ion-row>
+  </div>
+</ion-content>

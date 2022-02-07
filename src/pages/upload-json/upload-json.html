@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Configure PocketEC</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+
+  <ion-item text-wrap align='center' no-lines>
+    <button ion-button item-right (click)="deployActionSheet()" block>Show Menu</button>
+  </ion-item>
+  <!-- View showing list of all stored configurations  -->
+  <div *ngIf='showConfigList'>
+    <ion-item *ngFor="let config of configurations; let i = index" class='methodText'>
+      <ion-label>
+        Name: <b>{{config.name}}</b> : {{config.dateCreated}}
+      </ion-label>
+      <img item-end (click)='chooseConfigFromList(config)' src="assets/imgs/icons8-pencil-16.png" />
+      <img item-end (click)='confirmBeforeDeletion(config)' src="assets/imgs/icons8-trash-can-16.png" />
+    </ion-item>
+  </div>
+  <!-- Configuration Edit mode of chosen configuration  -->
+  <div *ngIf='showDeviceSetting'>
+    <ion-item text-wrap>
+      <ion-label  color="primary">Enter a name:</ion-label>
+      <ion-input required [(ngModel)]="name" placeholder='settings' name="one"></ion-input>
+    </ion-item>
+    <!-- Start Error view  -->
+    <div *ngIf='listOfUndefined.length != 0'>
+      <ion-label *ngFor="let property of listOfUndefined" color='danger'>{{property}}</ion-label>
+    </div>
+    <!-- End error view -->
+    <ion-item>
+      <ion-label  color="primary">Edit PocketEC properties:</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-textarea placeholder="JSON format" rows='40' [(ngModel)]="deviceSettingAsString" ></ion-textarea>
+    </ion-item>
+  </div>
+
+</ion-content>

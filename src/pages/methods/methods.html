@@ -1,0 +1,279 @@
+<!-- Header -->
+<ion-header>
+  <ion-navbar>
+    <ion-title>Methods</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<!-- Body -->
+<ion-content padding>
+  <ion-item text-wrap align='center' no-lines class='item-no-padding'>
+    <button ion-button item-right (click)="saveMethod()" *ngIf='showCurrentMethod'>Save Changes</button>
+    <button ion-button item-right (click)="goToMethodEdit()" *ngIf='showMethodsList'>Back</button>
+    <!-- <button ion-button item-right (click)="deployActionSheet()"><ion-icon name="add"></ion-icon></button> -->
+    <ion-icon item-left (click)="deployActionSheet()"name="add" color='primary'></ion-icon>
+  </ion-item>
+  <div *ngIf='showMethodsList' >
+    <ion-item *ngFor="let method of listOfMethods; let i = index" class='item-no-padding'>
+      <ion-label (click)='confirmBeforeLoadingChosenMethod(method)' >
+        {{method.name}}: {{method.dateModified_localString}}
+      </ion-label>
+      <img item-end (click)='confirmBeforeLoadingChosenMethod(method)' src="assets/imgs/icons8-pencil-16.png" />
+      <img item-end (click)='confirmBeforeDeletion(method)' src="assets/imgs/icons8-trash-can-16.png" />
+    </ion-item>
+  </div>
+  <div *ngIf='showCurrentMethod'>
+
+
+    <ion-item text-end class='item-no-padding'>
+      <ion-label color='primary'><b>Method Name:</b></ion-label>
+        <ion-input text-end type='text' required [(ngModel)]='currentMethod.name'
+        name='mName'></ion-input>
+    </ion-item>
+
+    <!-- Start Precondition setup -->
+    <ion-item style='background-color: gainsboro' no-lines >
+      <button ion-button full
+        (click)="this.displayPrecondition = true;this.displayMeasure=false;this.displayPostMeasure=false;this.displayCalib=false">
+        Precondition ({{this.currentMethod.listOfPreconditions.length}}) x {{this.currentMethod.preconditionRepetition}}
+      </button>
+    </ion-item>
+
+
+    <div *ngIf='displayPrecondition'>
+      <ion-item text-wrap style='background-color: gainsboro' no-lines *ngFor="let precondition of currentMethod.listOfPreconditions; let i=index" class='methodText'>
+        <ion-label color='{{precondition.color}}'><b>Step {{i+1}}:</b>
+        {{precondition.gain.description}}
+        {{precondition.potential.description}} for
+        {{precondition.duration}} s <i class='methodText' *ngIf='precondition.save' clear>@
+        {{precondition.dataFrequency}} ms</i>
+        </ion-label>
+
+        <img item-end (click)='editTechnique(precondition,false)' src="assets/imgs/icons8-pencil-16.png" />
+        <img item-end (click)='removePrecondition(precondition,i)' src="assets/imgs/icons8-trash-can-16.png" />
+      </ion-item>
+
+      <ion-item text-end class='item-no-padding'>
+        <!-- < *ngIf='listOfPreconditions.length !=0> -->
+        <ion-label color='primary'><b>Repeat precondition</b></ion-label>
+        <ion-input text-end type='number' required [(ngModel)]='currentMethod.preconditionRepetition'
+        name='pRepeat' (ionBlur)="savePreconditionRepetition();"></ion-input>
+      </ion-item>
+
+      <ion-item class="item-no-padding" (click)="setRLoadandIntZ()" >
+        <ion-label>
+          <a style="text-transform: none;" clear>
+            Resistor Load & Internal Zero
+          </a>
+        </ion-label>
+
+        <div item-end class='tallFont'>
+          {{currentTechnique.gain.rLoad.description}} & {{currentTechnique.potential.intZ.description}}
+        </div>
+
+      </ion-item>
+      <ion-item class="item-no-padding" (click)="openGainAndPotential()">
+        <ion-label><a style="text-transform: none;" clear> Set Gain & Potential</a></ion-label>
+
+        <div item-end class='tallFont'>{{currentTechnique.gain.description}} & {{currentTechnique.potential.description}} </div>
+
+      </ion-item>
+      <ion-item class='item-no-padding' item-end>
+        <ion-label color='primary'>Duration (s)</ion-label>
+        <ion-input text-end required type='number' [(ngModel)]="currentTechnique.duration" placeholder="1" min='1' max='32767' name="duration1"></ion-input>
+      </ion-item>
+      <ion-item class="item-no-padding">
+        <ion-label>Save data</ion-label>
+        <ion-toggle [(ngModel)]="currentTechnique.save" name='saveData'></ion-toggle>
+      </ion-item>
+      <ion-item *ngIf='currentTechnique.save' class='item-no-padding'>
+        <ion-label  color='primary'>Data Frequency (ms)</ion-label>
+        <ion-input  color='primary' text-end class="tallFont" type='number' required [(ngModel)]="currentTechnique.dataFrequency" placeholder="ms" min='1' max='32767' name="df1"></ion-input>
+      </ion-item>
+      <ion-item *ngIf='currentTechnique.save' class='item-no-padding'>
+        <ion-label color='primary' >Zero-Offset</ion-label>
+        <ion-input color='primary' text-end type='number' color='primary' class="tallFont" required [(ngModel)]="currentTechnique.zeroOffset" placeholder="0" min='-32001' max='32767' name="df3"></ion-input>
+      </ion-item>
+      <ion-item *ngIf='currentTechnique.save' class='item-no-padding'>
+        <ion-label color='primary' >Scaling Factor</ion-label>
+        <ion-input color='primary' text-end type='number' color='primary' class="tallFont" required [(ngModel)]="currentTechnique.scalingFactor" placeholder="1" min='-3200' max='32767' name="df4"></ion-input>
+      </ion-item>
+      <ion-item *ngIf='currentTechnique.save' class='item-no-padding'>
+        <ion-label color='primary' >Unit of current </ion-label>
+        <ion-input text-end color='primary' class="tallFont" required [(ngModel)]="currentMethod.unitOfCurrent" placeholder="uA" name="df5"></ion-input>
+      </ion-item>
+      <ion-item *ngIf='!editModePrecondition'>
+        <button ion-button item-right (click)="addNewTechnique(false)" color='danger'>Add precondition</button>
+      </ion-item>
+      <ion-item text-wrap  *ngIf='editModePrecondition'>
+        <button ion-button item-right (click)="saveTechnique(false)" color='danger'>Save precondition</button>
+      </ion-item>
+    </div>
+
+
+    <!-- Start measure setup -->
+
+    <ion-item no-lines style='background-color: gainsboro' >
+      <button ion-button full
+        (click)="this.displayMeasure = true;this.displayPrecondition=false;this.displayPostMeasure=false;this.displayCalib=false">
+        Measure ({{this.currentMethod.listOfMeasures.length}}) x {{this.currentMethod.measuresRepetition}}
+      </button>
+    </ion-item>
+
+
+    <div *ngIf='displayMeasure'>
+      <ion-item  text-wrap no-lines style='background-color: gainsboro' class='methodText' *ngFor="let measure of currentMethod.listOfMeasures; let i=index">
+        <ion-label color='{{measure.color}}'><b>Step {{i+1}}:</b>
+          {{measure.gain.description}}
+          {{measure.potential.description}} for
+          {{measure.duration}} s <i class='methodText' *ngIf='measure.save' clear>@
+          {{measure.dataFrequency}} ms</i>
+        </ion-label>
+
+        <img item-end (click)="editTechnique(measure,true)" src="assets/imgs/icons8-pencil-16.png" />
+        <img item-end (click)="removeMeasure(measure,i)" src="assets/imgs/icons8-trash-can-16.png" />
+      </ion-item>
+
+      <ion-item class='item-no-padding'>
+        <ion-label>Set continous measurement</ion-label>
+        <ion-toggle [(ngModel)]="currentMethod.continuousMeasure" (ionChange)="toggleContinuousMeasurement(continuousMeasure)" name='measureFlag'></ion-toggle>
+      </ion-item>
+      <ion-item text-end class='item-no-padding' *ngIf='currentMethod.listOfMeasures.length != 0 && !currentMethod.continuousMeasure'>
+
+        <!-- <button clear (click)="changeMeasuresRepetition(false)"><ion-icon style="color:primary" clear name="remove-circle" ></ion-icon></button> -->
+        <ion-label color='primary'>
+        <b>Repeat Measures</b>
+        </ion-label>
+        <ion-input type='number' text-end required [(ngModel)]='currentMethod.measuresRepetition' name='mRepeats' (ionBlur)='saveMeasureRepetition();'></ion-input>
+        <!-- <button clear (click)="changeMeasuresRepetition(true)"><ion-icon clear name="add-circle" style="color:primary"  ></ion-icon></button> -->
+      </ion-item>
+      <ion-item class="item-no-padding" >
+        <ion-label><a (click)="setRLoadandIntZ()" style="text-transform: none;" clear> Load Resistor & Internal Zero</a></ion-label>
+
+        <div item-end class='tallFont'>{{currentTechnique.gain.rLoad.description}} & {{currentTechnique.potential.intZ.description}} </div>
+
+      </ion-item>
+      <ion-item class="item-no-padding" (click)="openGainAndPotential()">
+        <ion-label><a (click)="openGainAndPotential()" style="text-transform: none;" clear> Set Gain & Potential</a></ion-label>
+
+        <div item-end class='tallFont'>{{currentTechnique.gain.description}} & {{currentTechnique.potential.description}}</div>
+
+      </ion-item>
+      <ion-item class='item-no-padding' item-end>
+        <ion-label color='primary' >Duration (s)</ion-label>
+        <ion-input text-end type='number' required [(ngModel)]="currentTechnique.duration" placeholder="seconds" name="duration2"></ion-input>
+      </ion-item>
+      <ion-item class="item-no-padding">
+        <ion-label>Save data</ion-label>
+        <ion-toggle [(ngModel)]="currentTechnique.save" name='saveData2'></ion-toggle>
+      </ion-item>
+      <ion-item *ngIf='currentTechnique.save' class='item-no-padding'>
+        <ion-label  color='primary'>Data Frequency (ms)</ion-label>
+        <ion-input text-end type='number' color='primary' class="tallFont" required [(ngModel)]="currentTechnique.dataFrequency" placeholder="ms" min='1' max='32767' name="df2"></ion-input>
+      </ion-item>
+      <ion-item *ngIf='currentTechnique.save' class='item-no-padding'>
+        <ion-label color='primary' >Zero-Offset</ion-label>
+        <ion-input text-end type='number' color='primary' class="tallFont" required [(ngModel)]="currentTechnique.zeroOffset" placeholder="0" min='-32001' max='32767' name="df3"></ion-input>
+      </ion-item>
+      <ion-item *ngIf='currentTechnique.save' class='item-no-padding'>
+        <ion-label color='primary' >Scaling Factor</ion-label>
+        <ion-input text-end type='number' color='primary' class="tallFont" required [(ngModel)]="currentTechnique.scalingFactor" placeholder="1" min='-3200' max='32767' name="df4"></ion-input>
+      </ion-item>
+      <ion-item *ngIf='currentTechnique.save' class='item-no-padding'>
+        <ion-label color='primary' >Unit of current </ion-label>
+        <ion-input text-end color='primary' class="tallFont" required [(ngModel)]="currentMethod.unitOfCurrent" placeholder="mM" name="df5"></ion-input>
+      </ion-item>
+      <ion-item text-wrap  *ngIf='!editModeMeasure'>
+
+        <button ion-button item-right (click)="addNewTechnique(true)" color='danger'>Add Technique</button>
+      </ion-item>
+      <ion-item text-wrap  *ngIf='editModeMeasure'>
+
+        <button ion-button item-right (click)="saveTechnique(true)" color='danger'>Save Technique</button>
+      </ion-item>
+
+    </div>
+
+    <!-- Start Postmeasure setup -->
+
+    <ion-item no-lines style='background-color: gainsboro' >
+      <button ion-button full
+        (click)="this.displayPostMeasure = true;this.displayPrecondition=false;this.displayMeasure=false;this.displayCalib=false">
+        Post Measure
+      </button>
+    </ion-item>
+
+    <div *ngIf='displayPostMeasure'>
+      <ion-item class="buttonText">
+        <ion-label>Set continuous voltage on</ion-label>
+        <ion-toggle [(ngModel)]="setVoltageToggle" (ionChange)="toggleVoltageSetting(setVoltageToggle)" name='postMeasure'></ion-toggle>
+      </ion-item>
+    </div>
+      <!-- End Postmeasure setup -->
+
+
+    <!-- Start Calibration listing -->
+<!--
+    <ion-item no-lines style='background-color: gainsboro' >
+      <button ion-button full
+        (click)="this.displayPostMeasure=false ;this.displayPrecondition=false;this.displayMeasure=false;this.displayCalib=true;getAlgorithmArray()">
+        Calibration
+      </button>
+    </ion-item>
+    <div *ngIf='displayCalib'>
+      <div style='background-color: gainsboro'>
+        <ion-item no-padding no-lines >
+          <ion-label color='primary' class="methodText">Include first data point of step</ion-label>
+          <ion-toggle [(ngModel)]="includeFirstMeasure" name='inclFirst'></ion-toggle>
+        </ion-item>
+        <ion-item class='methodText' no-lines no-padding>
+          <ion-label color='primary' class="methodText">Unit of Charge</ion-label>
+          <ion-input class='methodText' text-end required
+          type='text' [(ngModel)]='stepsObjectForAnalysis.unitOfCharge' #unitOfCharge
+          placeholder='mM' class='inp'></ion-input>
+        </ion-item>
+
+        <ion-item text-end class='methodText' no-lines no-padding>
+          <ion-label color='primary' class="methodText">Offset *</ion-label>
+          <ion-input text-end required type='number' #offset
+          [(ngModel)]='stepsObjectForAnalysis.offset' name='offset' placeholder='0'></ion-input>
+
+        </ion-item>
+        <ion-item text-end class='methodText' no-lines no-padding>
+          <ion-label color='primary' class="methodText">Sensitivity *</ion-label>
+          <ion-input text-end required type='number' #sensitivity
+          [(ngModel)]='stepsObjectForAnalysis.sensitivity' name='sensitivity' placeholder='0' class='inp'></ion-input>
+        </ion-item>
+
+        <ion-item class='methodText' no-lines no-padding>
+          <ion-label color='primary' class="methodText">Calculate Final Charge</ion-label>
+          <ion-select text-end placeholder="Select One" #algorithmView
+               interface='action-sheet'
+               (ionChange)='setAlgorithm($event);'
+               multiple='false'
+               name='calculateCharge'>
+            <ion-option  *ngFor="let step of algorithmArray; let i=index" value={{i}}>
+              {{step.description}}
+            </ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item class='methodText' no-padding no-lines >
+          <ion-label color='primary' class="methodText">Unit of Result</ion-label>
+          <ion-input class='methodText' text-end required #unitDependentOnSensitivity
+          type='text' [(ngModel)]='stepsObjectForAnalysis.unitDependentOnSensitivity'
+          name='unitDependentOnSensitivity' placeholder='mM' class='inp'></ion-input>
+        </ion-item>
+        <ion-item text-end class='methodText' no-lines no-padding>
+          <ion-label color='primary' class="methodText"><a (click)='goToCalibrate()' text-end>Calibrate</a></ion-label>
+        </ion-item>
+      </div>
+    </div>
+     End Calibration  -->
+
+
+    <ion-fab top right mini *ngIf='restartFlag'>
+      <button ion-fab color='danger' (click)='restartMeasurement();'><img src="assets/imgs/icons8-restart-16.png" /></button>
+    </ion-fab>
+  </div>
+
+</ion-content>

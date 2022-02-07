@@ -1,0 +1,144 @@
+{"lmp91000":{
+  "REFCN":{
+    "REFCN_INTZ_20PCT":{
+      "SETTING": [
+        {"description": "0.6V","command":"157"},
+        {"description": "0.55V","command":"156"},
+        {"description": "0.5V","command":"155"},
+        {"description": "0.45V","command":"154"},
+        {"description": "0.4V","command":"153"},
+        {"description": "0.35V","command":"152"},
+        {"description": "0.3V","command":"151"},
+        {"description": "0.25V","command":"150"},
+        {"description": "0.2V","command":"149"},
+        {"description": "0.15V","command":"148"},
+        {"description": "0.1V","command":"147"},
+        {"description": "0.05V","command":"146"},
+        {"description": "0.025V","command":"145"},
+        {"description": "0V","command":"208"},
+        {"description": "-0.025V","command":"129"},
+        {"description": "-0.05V","command":"130"},
+        {"description": "-0.1V","command":"131"},
+        {"description": "-0.15V","command":"132"},
+        {"description": "-0.2V","command":"133"},
+        {"description": "-0.25V","command":"134"},
+        {"description": "-0.3V","command":"135"},
+        {"description": "-0.35V","command":"136"},
+        {"description": "-0.4V","command":"137"},
+        {"description": "-0.45V","command":"138"},
+        {"description": "-0.5V","command":"139"},
+        {"description": "-0.55V","command":"140"},
+        {"description": "-0.6V","command":"141"}
+      ]
+    },
+    "REFCN_INTZ_50PCT":{
+      "SETTING": [
+        {"description": "0.6V","command":"189"},
+        {"description": "0.55V","command":"188"},
+        {"description": "0.5V","command":"187"},
+        {"description": "0.45V","command":"186"},
+        {"description": "0.4V","command":"185"},
+        {"description": "0.35V","command":"184"},
+        {"description": "0.3V","command":"183"},
+        {"description": "0.25V","command":"182"},
+        {"description": "0.2V","command":"181"},
+        {"description": "0.15V","command":"180"},
+        {"description": "0.1V","command":"179"},
+        {"description": "0.05V","command":"178"},
+        {"description": "0.025V","command":"177"},
+        {"description": "0V","command":"176"},
+        {"description": "-0.025V","command":"161"},
+        {"description": "-0.05V","command":"162"},
+        {"description": "-0.1V","command":"163"},
+        {"description": "-0.15V","command":"164"},
+        {"description": "-0.2V","command":"165"},
+        {"description": "-0.25V","command":"166"},
+        {"description": "-0.3V","command":"167"},
+        {"description": "-0.35V","command":"168"},
+        {"description": "-0.4V","command":"169"},
+        {"description": "-0.45V","command":"170"},
+        {"description": "-0.5V","command":"171"},
+        {"description": "-0.55V","command":"172"},
+        {"description": "-0.6V","command":"173"}
+      ]
+    },
+    "REFCN_INTZ_67PCT":{
+      "SETTING": [
+        {"description": "0.6V","command":"221"},
+        {"description": "0.55V","command":"220"},
+        {"description": "0.5V","command":"219"},
+        {"description": "0.45V","command":"218"},
+        {"description": "0.4V","command":"217"},
+        {"description": "0.35V","command":"216"},
+        {"description": "0.3V","command":"215"},
+        {"description": "0.25V","command":"214"},
+        {"description": "0.2V","command":"213"},
+        {"description": "0.15V","command":"212"},
+        {"description": "0.1V","command":"211"},
+        {"description": "0.05V","command":"210"},
+        {"description": "0.025V","command":"209"},
+        {"description": "0V","command":"208"},
+        {"description": "-0.025V","command":"193"},
+        {"description": "-0.05V","command":"194"},
+        {"description": "-0.1V","command":"195"},
+        {"description": "-0.15V","command":"196"},
+        {"description": "-0.2V","command":"197"},
+        {"description": "-0.25V","command":"198"},
+        {"description": "-0.3V","command":"199"},
+        {"description": "-0.35V","command":"200"},
+        {"description": "-0.4V","command":"201"},
+        {"description": "-0.45V","command":"202"},
+        {"description": "-0.5V","command":"203"},
+        {"description": "-0.55V","command":"204"},
+        {"description": "-0.6V","command":"205"}
+      ]
+    }
+  },
+  "TIACN":{
+      "RLoad_10_ohm":{
+        "SETTING":[
+          {"description": "2.75K","command": "4"},
+          {"description": "3.5K","command":"8"},
+          {"description": "7K","command":"12"},
+          {"description": "15K","command":"16"},
+          {"description": "35K","command":"20"},
+          {"description": "120K","command":"24"},
+          {"description": "350K","command":"28"}
+        ]
+      },
+      "RLoad_33_ohm":{
+        "SETTING":[
+          {"description": "2.75K","command": "4"},
+          {"description": "3.5K","command":"8"},
+          {"description": "7K","command":"12"},
+          {"description": "15K","command":"16"},
+          {"description": "35K","command":"20"},
+          {"description": "120K","command":"24"},
+          {"description": "350K","command":"28"}
+        ]
+      },
+      "RLoad_50_ohm":{
+        "SETTING":[
+          {"description": "2.75K","command": "4"},
+          {"description": "3.5K","command":"8"},
+          {"description": "7K","command":"12"},
+          {"description": "15K","command":"16"},
+          {"description": "35K","command":"20"},
+          {"description": "120K","command":"24"},
+          {"description": "350K","command":"28"}
+        ]
+      },
+      "RLoad_100_ohm":{
+        "SETTING":[
+          {"description": "2.75K","command": "4"},
+          {"description": "3.5K","command":"8"},
+          {"description": "7K","command":"12"},
+          {"description": "15K","command":"16"},
+          {"description": "35K","command":"20"},
+          {"description": "120K","command":"24"},
+          {"description": "350K","command":"28"}
+        ]
+      }
+    }
+  }
+}
