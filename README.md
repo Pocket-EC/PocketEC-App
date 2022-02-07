@@ -1,6 +1,7 @@
 # PocketEC-App
-This is an IONIC 3 project created with IONIC CLI 
-https://ionicframework.com/docs/cli/ 
+This is an IONIC 3 project created with IONIC CLI
+
+* https://ionicframework.com/docs/cli/ 
 
 An android app is available to download in Google Play
 
