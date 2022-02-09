@@ -15,9 +15,10 @@ To develop your own features, please fork this repository.
 ## Prerequesites 
 
 ## NVM
-* Please install the latest NPM from here - https://www.npmjs.com/get-npm
+* Please install the latest version from here - https://github.com/nvm-sh/nvm
 * Download the clone and run 
-* npm install
+** nvm use
+** npm install
 
 This app can only be tested on a device as it uses Ionic native plugins. 
 
